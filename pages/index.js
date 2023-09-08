@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useState } from "react";
 import styles from "./index.module.css";
 import Amplify from "aws-amplify";
+import { AmplifySignout, withAuthenticator } from "@aws-amplify/ui-react";
 
 export default function Home() {
   const prompts = {
@@ -45,7 +46,7 @@ export default function Home() {
   return (
     <div>
       <main className={styles.main}>
-        <AmplifySignOut />
+        <AmplifySignout />
         <ul>
         {iterations.map(iteration => (
           <li>{iteration}</li>
