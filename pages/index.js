@@ -1,14 +1,13 @@
 import Head from "next/head";
 import { useState } from "react";
 import styles from "./index.module.css";
-import Amplify from "aws-amplify";
+import { Amplify } from "aws-amplify";
 import { AmplifySignOut, withAuthenticator } from "@aws-amplify/ui-react";
-import awsconfig from "../src/aws-exports";
 
-Amplify.configure(awsconfig);
+import awsExports from '../src/aws-exports';
+Amplify.configure(awsExports);
 
-
-export default function Home() {
+function Home() {
   const prompts = {
     "Blog": "This is a blog.",
     "Press Release": "This is a press release.",
@@ -76,3 +75,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default withAuthenticator(Home);
