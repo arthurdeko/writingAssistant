@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useState } from "react";
 import styles from "./index.module.css";
 import { Amplify } from "aws-amplify";
+import '@aws-amplify/ui-react/styles.css';
 import { AmplifySignOut, withAuthenticator } from "@aws-amplify/ui-react";
 
 import awsExports from '../src/aws-exports';
