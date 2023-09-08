@@ -10,11 +10,13 @@ export default function Home() {
   }
 
   const [questionInput, setquestionInput] = useState("");
+  const [iterations, setIterations] = useState([]);
   const [outputType, setOutputType] = useState("blog");
   const [result, setResult] = useState();
 
   async function onSubmit(event) {
     event.preventDefault();
+    iterations.push(questionInput);
     try {
       
       const response = await fetch("/api/generate", {
@@ -42,6 +44,11 @@ export default function Home() {
   return (
     <div>
       <main className={styles.main}>
+        <ul>
+        {iterations.map(iteration => (
+          <li>{iteration}</li>
+        ))}
+        </ul>
         <form onSubmit={onSubmit}>
           <select name="outputType" value="Blog" onChange={(e) => setOutputType(prompts[e.target.value])}>
             <option value="Blog">Blog</option>
@@ -57,7 +64,7 @@ export default function Home() {
           />
           <input type="submit" value="Create!" />
         </form>
-        <div className={styles.result}>{result}</div>
+        <textarea name="currentVersion" value={result}></textarea>
       </main>
     </div>
   );
