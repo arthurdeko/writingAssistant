@@ -58,7 +58,7 @@ export default function Home() {
           <input
             type="text"
             name="question"
-            placeholder="Ask about ClearCogs"
+            placeholder="What do you want to write about?"
             value={questionInput}
             onChange={(e) => setquestionInput(e.target.value)}
           />
