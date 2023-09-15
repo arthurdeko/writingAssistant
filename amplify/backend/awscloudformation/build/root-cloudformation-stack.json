@@ -202,7 +202,7 @@
           },
           "breakCircularDependency": true,
           "dependsOn": "",
-          "env": "dev"
+          "env": "main"
         }
       }
     },
@@ -216,7 +216,7 @@
           "DynamoDBEnableServerSideEncryption": false,
           "S3DeploymentBucket": "amplify-testapp-dev-171700-deployment",
           "S3DeploymentRootKey": "amplify-appsync-files/2c8949830d2c03a07fef895d33afd308679ed3e7",
-          "env": "dev"
+          "env": "main"
         }
       }
     },
