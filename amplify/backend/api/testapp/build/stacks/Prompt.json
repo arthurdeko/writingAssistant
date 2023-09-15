@@ -92,7 +92,7 @@
     }
   },
   "Resources": {
-    "TodoTable": {
+    "PromptTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
         "KeySchema": [
@@ -159,7 +159,7 @@
           "Fn::Join": [
             "",
             [
-              "Todo-",
+              "Prompt-",
               {
                 "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
               },
@@ -174,7 +174,7 @@
       "UpdateReplacePolicy": "Delete",
       "DeletionPolicy": "Delete"
     },
-    "TodoIAMRole2DA8E66E": {
+    "PromptIAMRole07E78375": {
       "Type": "AWS::IAM::Role",
       "Properties": {
         "AssumeRolePolicyDocument": {
@@ -193,7 +193,7 @@
           "Fn::Join": [
             "",
             [
-              "TodoIAMRolecfd440-",
+              "PromptIAMRole3d85ee-",
               {
                 "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
               },
@@ -206,7 +206,7 @@
         }
       }
     },
-    "TodoIAMRoleDefaultPolicy7BBBF45B": {
+    "PromptIAMRoleDefaultPolicy194BAB09": {
       "Type": "AWS::IAM::Policy",
       "Properties": {
         "PolicyDocument": {
@@ -230,7 +230,7 @@
               "Resource": [
                 {
                   "Fn::GetAtt": [
-                    "TodoTable",
+                    "PromptTable",
                     "Arn"
                   ]
                 },
@@ -242,10 +242,10 @@
           ],
           "Version": "2012-10-17"
         },
-        "PolicyName": "TodoIAMRoleDefaultPolicy7BBBF45B",
+        "PolicyName": "PromptIAMRoleDefaultPolicy194BAB09",
         "Roles": [
           {
-            "Ref": "TodoIAMRole2DA8E66E"
+            "Ref": "PromptIAMRole07E78375"
           }
         ]
       }
@@ -276,7 +276,7 @@
                         "Fn::Join": [
                           "",
                           [
-                            "Todo-",
+                            "Prompt-",
                             {
                               "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
                             },
@@ -298,7 +298,7 @@
                         "Fn::Join": [
                           "",
                           [
-                            "Todo-",
+                            "Prompt-",
                             {
                               "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
                             },
@@ -320,39 +320,39 @@
         "PolicyName": "DynamoDBAccess71ABE5AE",
         "Roles": [
           {
-            "Ref": "TodoIAMRole2DA8E66E"
+            "Ref": "PromptIAMRole07E78375"
           }
         ]
       }
     },
-    "TodoDataSource": {
+    "PromptDataSource": {
       "Type": "AWS::AppSync::DataSource",
       "Properties": {
         "ApiId": {
           "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
         },
-        "Name": "TodoTable",
+        "Name": "PromptTable",
         "Type": "AMAZON_DYNAMODB",
         "DynamoDBConfig": {
           "AwsRegion": {
             "Ref": "AWS::Region"
           },
           "TableName": {
-            "Ref": "TodoTable"
+            "Ref": "PromptTable"
           }
         },
         "ServiceRoleArn": {
           "Fn::GetAtt": [
-            "TodoIAMRole2DA8E66E",
+            "PromptIAMRole07E78375",
             "Arn"
           ]
         }
       },
       "DependsOn": [
-        "TodoIAMRole2DA8E66E"
+        "PromptIAMRole07E78375"
       ]
     },
-    "QuerygetTodopostAuth0FunctionQuerygetTodopostAuth0FunctionAppSyncFunction6BE14593": {
+    "QuerygetPromptpostAuth0FunctionQuerygetPromptpostAuth0FunctionAppSyncFunction36F3D054": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
         "ApiId": {
@@ -361,7 +361,7 @@
         "DataSourceName": {
           "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
         },
-        "Name": "QuerygetTodopostAuth0Function",
+        "Name": "QuerygetPromptpostAuth0Function",
         "FunctionVersion": "2018-05-29",
         "RequestMappingTemplateS3Location": {
           "Fn::Join": [
@@ -375,14 +375,14 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Query.getTodo.postAuth.1.req.vtl"
+              "/resolvers/Query.getPrompt.postAuth.1.req.vtl"
             ]
           ]
         },
         "ResponseMappingTemplate": "$util.toJson({})"
       }
     },
-    "QueryGetTodoDataResolverFnQueryGetTodoDataResolverFnAppSyncFunctionE2B57DAD": {
+    "QueryGetPromptDataResolverFnQueryGetPromptDataResolverFnAppSyncFunction2DC16588": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
         "ApiId": {
@@ -390,11 +390,11 @@
         },
         "DataSourceName": {
           "Fn::GetAtt": [
-            "TodoDataSource",
+            "PromptDataSource",
             "Name"
           ]
         },
-        "Name": "QueryGetTodoDataResolverFn",
+        "Name": "QueryGetPromptDataResolverFn",
         "FunctionVersion": "2018-05-29",
         "RequestMappingTemplateS3Location": {
           "Fn::Join": [
@@ -408,7 +408,7 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Query.getTodo.req.vtl"
+              "/resolvers/Query.getPrompt.req.vtl"
             ]
           ]
         },
@@ -424,35 +424,35 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Query.getTodo.res.vtl"
+              "/resolvers/Query.getPrompt.res.vtl"
             ]
           ]
         }
       },
       "DependsOn": [
-        "TodoDataSource"
+        "PromptDataSource"
       ]
     },
-    "GetTodoResolver": {
+    "GetPromptResolver": {
       "Type": "AWS::AppSync::Resolver",
       "Properties": {
         "ApiId": {
           "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
         },
-        "FieldName": "getTodo",
+        "FieldName": "getPrompt",
         "TypeName": "Query",
         "Kind": "PIPELINE",
         "PipelineConfig": {
           "Functions": [
             {
               "Fn::GetAtt": [
-                "QuerygetTodopostAuth0FunctionQuerygetTodopostAuth0FunctionAppSyncFunction6BE14593",
+                "QuerygetPromptpostAuth0FunctionQuerygetPromptpostAuth0FunctionAppSyncFunction36F3D054",
                 "FunctionId"
               ]
             },
             {
               "Fn::GetAtt": [
-                "QueryGetTodoDataResolverFnQueryGetTodoDataResolverFnAppSyncFunctionE2B57DAD",
+                "QueryGetPromptDataResolverFnQueryGetPromptDataResolverFnAppSyncFunction2DC16588",
                 "FunctionId"
               ]
             }
@@ -462,13 +462,13 @@
           "Fn::Join": [
             "",
             [
-              "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"getTodo\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"getPrompt\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
               {
                 "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
               },
               "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
               {
-                "Ref": "TodoTable"
+                "Ref": "PromptTable"
               },
               "\"))\n$util.toJson({})"
             ]
@@ -477,7 +477,7 @@
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
-    "QueryListTodosDataResolverFnQueryListTodosDataResolverFnAppSyncFunctionF825FE47": {
+    "QueryListPromptsDataResolverFnQueryListPromptsDataResolverFnAppSyncFunction6DB75B6D": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
         "ApiId": {
@@ -485,11 +485,11 @@
         },
         "DataSourceName": {
           "Fn::GetAtt": [
-            "TodoDataSource",
+            "PromptDataSource",
             "Name"
           ]
         },
-        "Name": "QueryListTodosDataResolverFn",
+        "Name": "QueryListPromptsDataResolverFn",
         "FunctionVersion": "2018-05-29",
         "RequestMappingTemplateS3Location": {
           "Fn::Join": [
@@ -503,7 +503,7 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Query.listTodos.req.vtl"
+              "/resolvers/Query.listPrompts.req.vtl"
             ]
           ]
         },
@@ -519,35 +519,35 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Query.listTodos.res.vtl"
+              "/resolvers/Query.listPrompts.res.vtl"
             ]
           ]
         }
       },
       "DependsOn": [
-        "TodoDataSource"
+        "PromptDataSource"
       ]
     },
-    "ListTodoResolver": {
+    "ListPromptResolver": {
       "Type": "AWS::AppSync::Resolver",
       "Properties": {
         "ApiId": {
           "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
         },
-        "FieldName": "listTodos",
+        "FieldName": "listPrompts",
         "TypeName": "Query",
         "Kind": "PIPELINE",
         "PipelineConfig": {
           "Functions": [
             {
               "Fn::GetAtt": [
-                "QuerygetTodopostAuth0FunctionQuerygetTodopostAuth0FunctionAppSyncFunction6BE14593",
+                "QuerygetPromptpostAuth0FunctionQuerygetPromptpostAuth0FunctionAppSyncFunction36F3D054",
                 "FunctionId"
               ]
             },
             {
               "Fn::GetAtt": [
-                "QueryListTodosDataResolverFnQueryListTodosDataResolverFnAppSyncFunctionF825FE47",
+                "QueryListPromptsDataResolverFnQueryListPromptsDataResolverFnAppSyncFunction6DB75B6D",
                 "FunctionId"
               ]
             }
@@ -557,13 +557,13 @@
           "Fn::Join": [
             "",
             [
-              "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"listTodos\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"listPrompts\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
               {
                 "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
               },
               "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
               {
-                "Ref": "TodoTable"
+                "Ref": "PromptTable"
               },
               "\"))\n$util.toJson({})"
             ]
@@ -572,7 +572,7 @@
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
-    "MutationcreateTodoinit0FunctionMutationcreateTodoinit0FunctionAppSyncFunction54DE5B8B": {
+    "MutationcreatePromptinit0FunctionMutationcreatePromptinit0FunctionAppSyncFunctionE22231EF": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
         "ApiId": {
@@ -581,7 +581,7 @@
         "DataSourceName": {
           "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
         },
-        "Name": "MutationcreateTodoinit0Function",
+        "Name": "MutationcreatePromptinit0Function",
         "FunctionVersion": "2018-05-29",
         "RequestMappingTemplateS3Location": {
           "Fn::Join": [
@@ -595,14 +595,14 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Mutation.createTodo.init.1.req.vtl"
+              "/resolvers/Mutation.createPrompt.init.1.req.vtl"
             ]
           ]
         },
         "ResponseMappingTemplate": "$util.toJson({})"
       }
     },
-    "MutationCreateTodoDataResolverFnMutationCreateTodoDataResolverFnAppSyncFunction900EC5CF": {
+    "MutationCreatePromptDataResolverFnMutationCreatePromptDataResolverFnAppSyncFunction3F6B4385": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
         "ApiId": {
@@ -610,11 +610,11 @@
         },
         "DataSourceName": {
           "Fn::GetAtt": [
-            "TodoDataSource",
+            "PromptDataSource",
             "Name"
           ]
         },
-        "Name": "MutationCreateTodoDataResolverFn",
+        "Name": "MutationCreatePromptDataResolverFn",
         "FunctionVersion": "2018-05-29",
         "RequestMappingTemplateS3Location": {
           "Fn::Join": [
@@ -628,7 +628,7 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Mutation.createTodo.req.vtl"
+              "/resolvers/Mutation.createPrompt.req.vtl"
             ]
           ]
         },
@@ -644,41 +644,41 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Mutation.createTodo.res.vtl"
+              "/resolvers/Mutation.createPrompt.res.vtl"
             ]
           ]
         }
       },
       "DependsOn": [
-        "TodoDataSource"
+        "PromptDataSource"
       ]
     },
-    "CreateTodoResolver": {
+    "CreatePromptResolver": {
       "Type": "AWS::AppSync::Resolver",
       "Properties": {
         "ApiId": {
           "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
         },
-        "FieldName": "createTodo",
+        "FieldName": "createPrompt",
         "TypeName": "Mutation",
         "Kind": "PIPELINE",
         "PipelineConfig": {
           "Functions": [
             {
               "Fn::GetAtt": [
-                "MutationcreateTodoinit0FunctionMutationcreateTodoinit0FunctionAppSyncFunction54DE5B8B",
+                "MutationcreatePromptinit0FunctionMutationcreatePromptinit0FunctionAppSyncFunctionE22231EF",
                 "FunctionId"
               ]
             },
             {
               "Fn::GetAtt": [
-                "QuerygetTodopostAuth0FunctionQuerygetTodopostAuth0FunctionAppSyncFunction6BE14593",
+                "QuerygetPromptpostAuth0FunctionQuerygetPromptpostAuth0FunctionAppSyncFunction36F3D054",
                 "FunctionId"
               ]
             },
             {
               "Fn::GetAtt": [
-                "MutationCreateTodoDataResolverFnMutationCreateTodoDataResolverFnAppSyncFunction900EC5CF",
+                "MutationCreatePromptDataResolverFnMutationCreatePromptDataResolverFnAppSyncFunction3F6B4385",
                 "FunctionId"
               ]
             }
@@ -688,13 +688,13 @@
           "Fn::Join": [
             "",
             [
-              "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"createTodo\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"createPrompt\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
               {
                 "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
               },
               "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
               {
-                "Ref": "TodoTable"
+                "Ref": "PromptTable"
               },
               "\"))\n$util.toJson({})"
             ]
@@ -703,7 +703,7 @@
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
-    "MutationupdateTodoinit0FunctionMutationupdateTodoinit0FunctionAppSyncFunction1B95BB19": {
+    "MutationupdatePromptinit0FunctionMutationupdatePromptinit0FunctionAppSyncFunction8A5B6355": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
         "ApiId": {
@@ -712,7 +712,7 @@
         "DataSourceName": {
           "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
         },
-        "Name": "MutationupdateTodoinit0Function",
+        "Name": "MutationupdatePromptinit0Function",
         "FunctionVersion": "2018-05-29",
         "RequestMappingTemplateS3Location": {
           "Fn::Join": [
@@ -726,14 +726,14 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Mutation.updateTodo.init.1.req.vtl"
+              "/resolvers/Mutation.updatePrompt.init.1.req.vtl"
             ]
           ]
         },
         "ResponseMappingTemplate": "$util.toJson({})"
       }
     },
-    "MutationUpdateTodoDataResolverFnMutationUpdateTodoDataResolverFnAppSyncFunctionBC238C49": {
+    "MutationUpdatePromptDataResolverFnMutationUpdatePromptDataResolverFnAppSyncFunction3669E9E6": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
         "ApiId": {
@@ -741,11 +741,11 @@
         },
         "DataSourceName": {
           "Fn::GetAtt": [
-            "TodoDataSource",
+            "PromptDataSource",
             "Name"
           ]
         },
-        "Name": "MutationUpdateTodoDataResolverFn",
+        "Name": "MutationUpdatePromptDataResolverFn",
         "FunctionVersion": "2018-05-29",
         "RequestMappingTemplateS3Location": {
           "Fn::Join": [
@@ -759,7 +759,7 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Mutation.updateTodo.req.vtl"
+              "/resolvers/Mutation.updatePrompt.req.vtl"
             ]
           ]
         },
@@ -775,41 +775,41 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Mutation.updateTodo.res.vtl"
+              "/resolvers/Mutation.updatePrompt.res.vtl"
             ]
           ]
         }
       },
       "DependsOn": [
-        "TodoDataSource"
+        "PromptDataSource"
       ]
     },
-    "UpdateTodoResolver": {
+    "UpdatePromptResolver": {
       "Type": "AWS::AppSync::Resolver",
       "Properties": {
         "ApiId": {
           "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
         },
-        "FieldName": "updateTodo",
+        "FieldName": "updatePrompt",
         "TypeName": "Mutation",
         "Kind": "PIPELINE",
         "PipelineConfig": {
           "Functions": [
             {
               "Fn::GetAtt": [
-                "MutationupdateTodoinit0FunctionMutationupdateTodoinit0FunctionAppSyncFunction1B95BB19",
+                "MutationupdatePromptinit0FunctionMutationupdatePromptinit0FunctionAppSyncFunction8A5B6355",
                 "FunctionId"
               ]
             },
             {
               "Fn::GetAtt": [
-                "QuerygetTodopostAuth0FunctionQuerygetTodopostAuth0FunctionAppSyncFunction6BE14593",
+                "QuerygetPromptpostAuth0FunctionQuerygetPromptpostAuth0FunctionAppSyncFunction36F3D054",
                 "FunctionId"
               ]
             },
             {
               "Fn::GetAtt": [
-                "MutationUpdateTodoDataResolverFnMutationUpdateTodoDataResolverFnAppSyncFunctionBC238C49",
+                "MutationUpdatePromptDataResolverFnMutationUpdatePromptDataResolverFnAppSyncFunction3669E9E6",
                 "FunctionId"
               ]
             }
@@ -819,13 +819,13 @@
           "Fn::Join": [
             "",
             [
-              "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"updateTodo\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"updatePrompt\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
               {
                 "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
               },
               "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
               {
-                "Ref": "TodoTable"
+                "Ref": "PromptTable"
               },
               "\"))\n$util.toJson({})"
             ]
@@ -834,7 +834,7 @@
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
-    "MutationDeleteTodoDataResolverFnMutationDeleteTodoDataResolverFnAppSyncFunction3879153F": {
+    "MutationDeletePromptDataResolverFnMutationDeletePromptDataResolverFnAppSyncFunctionCFC559EF": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
         "ApiId": {
@@ -842,11 +842,11 @@
         },
         "DataSourceName": {
           "Fn::GetAtt": [
-            "TodoDataSource",
+            "PromptDataSource",
             "Name"
           ]
         },
-        "Name": "MutationDeleteTodoDataResolverFn",
+        "Name": "MutationDeletePromptDataResolverFn",
         "FunctionVersion": "2018-05-29",
         "RequestMappingTemplateS3Location": {
           "Fn::Join": [
@@ -860,7 +860,7 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Mutation.deleteTodo.req.vtl"
+              "/resolvers/Mutation.deletePrompt.req.vtl"
             ]
           ]
         },
@@ -876,35 +876,35 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Mutation.deleteTodo.res.vtl"
+              "/resolvers/Mutation.deletePrompt.res.vtl"
             ]
           ]
         }
       },
       "DependsOn": [
-        "TodoDataSource"
+        "PromptDataSource"
       ]
     },
-    "DeleteTodoResolver": {
+    "DeletePromptResolver": {
       "Type": "AWS::AppSync::Resolver",
       "Properties": {
         "ApiId": {
           "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
         },
-        "FieldName": "deleteTodo",
+        "FieldName": "deletePrompt",
         "TypeName": "Mutation",
         "Kind": "PIPELINE",
         "PipelineConfig": {
           "Functions": [
             {
               "Fn::GetAtt": [
-                "QuerygetTodopostAuth0FunctionQuerygetTodopostAuth0FunctionAppSyncFunction6BE14593",
+                "QuerygetPromptpostAuth0FunctionQuerygetPromptpostAuth0FunctionAppSyncFunction36F3D054",
                 "FunctionId"
               ]
             },
             {
               "Fn::GetAtt": [
-                "MutationDeleteTodoDataResolverFnMutationDeleteTodoDataResolverFnAppSyncFunction3879153F",
+                "MutationDeletePromptDataResolverFnMutationDeletePromptDataResolverFnAppSyncFunctionCFC559EF",
                 "FunctionId"
               ]
             }
@@ -914,13 +914,13 @@
           "Fn::Join": [
             "",
             [
-              "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"deleteTodo\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"deletePrompt\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
               {
                 "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
               },
               "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
               {
-                "Ref": "TodoTable"
+                "Ref": "PromptTable"
               },
               "\"))\n$util.toJson({})"
             ]
@@ -929,7 +929,7 @@
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
-    "SubscriptionOnCreateTodoDataResolverFnSubscriptionOnCreateTodoDataResolverFnAppSyncFunction462A70C9": {
+    "SubscriptionOnCreatePromptDataResolverFnSubscriptionOnCreatePromptDataResolverFnAppSyncFunction8E5BF980": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
         "ApiId": {
@@ -938,7 +938,7 @@
         "DataSourceName": {
           "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
         },
-        "Name": "SubscriptionOnCreateTodoDataResolverFn",
+        "Name": "SubscriptionOnCreatePromptDataResolverFn",
         "FunctionVersion": "2018-05-29",
         "RequestMappingTemplateS3Location": {
           "Fn::Join": [
@@ -952,7 +952,7 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Subscription.onCreateTodo.req.vtl"
+              "/resolvers/Subscription.onCreatePrompt.req.vtl"
             ]
           ]
         },
@@ -968,32 +968,32 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Subscription.onCreateTodo.res.vtl"
+              "/resolvers/Subscription.onCreatePrompt.res.vtl"
             ]
           ]
         }
       }
     },
-    "SubscriptiononCreateTodoResolver": {
+    "SubscriptiononCreatePromptResolver": {
       "Type": "AWS::AppSync::Resolver",
       "Properties": {
         "ApiId": {
           "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
         },
-        "FieldName": "onCreateTodo",
+        "FieldName": "onCreatePrompt",
         "TypeName": "Subscription",
         "Kind": "PIPELINE",
         "PipelineConfig": {
           "Functions": [
             {
               "Fn::GetAtt": [
-                "QuerygetTodopostAuth0FunctionQuerygetTodopostAuth0FunctionAppSyncFunction6BE14593",
+                "QuerygetPromptpostAuth0FunctionQuerygetPromptpostAuth0FunctionAppSyncFunction36F3D054",
                 "FunctionId"
               ]
             },
             {
               "Fn::GetAtt": [
-                "SubscriptionOnCreateTodoDataResolverFnSubscriptionOnCreateTodoDataResolverFnAppSyncFunction462A70C9",
+                "SubscriptionOnCreatePromptDataResolverFnSubscriptionOnCreatePromptDataResolverFnAppSyncFunction8E5BF980",
                 "FunctionId"
               ]
             }
@@ -1003,7 +1003,7 @@
           "Fn::Join": [
             "",
             [
-              "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onCreateTodo\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onCreatePrompt\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
               {
                 "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
               },
@@ -1014,26 +1014,26 @@
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
-    "SubscriptiononUpdateTodoResolver": {
+    "SubscriptiononUpdatePromptResolver": {
       "Type": "AWS::AppSync::Resolver",
       "Properties": {
         "ApiId": {
           "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
         },
-        "FieldName": "onUpdateTodo",
+        "FieldName": "onUpdatePrompt",
         "TypeName": "Subscription",
         "Kind": "PIPELINE",
         "PipelineConfig": {
           "Functions": [
             {
               "Fn::GetAtt": [
-                "QuerygetTodopostAuth0FunctionQuerygetTodopostAuth0FunctionAppSyncFunction6BE14593",
+                "QuerygetPromptpostAuth0FunctionQuerygetPromptpostAuth0FunctionAppSyncFunction36F3D054",
                 "FunctionId"
               ]
             },
             {
               "Fn::GetAtt": [
-                "SubscriptionOnCreateTodoDataResolverFnSubscriptionOnCreateTodoDataResolverFnAppSyncFunction462A70C9",
+                "SubscriptionOnCreatePromptDataResolverFnSubscriptionOnCreatePromptDataResolverFnAppSyncFunction8E5BF980",
                 "FunctionId"
               ]
             }
@@ -1043,7 +1043,7 @@
           "Fn::Join": [
             "",
             [
-              "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onUpdateTodo\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onUpdatePrompt\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
               {
                 "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
               },
@@ -1054,26 +1054,26 @@
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
-    "SubscriptiononDeleteTodoResolver": {
+    "SubscriptiononDeletePromptResolver": {
       "Type": "AWS::AppSync::Resolver",
       "Properties": {
         "ApiId": {
           "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
         },
-        "FieldName": "onDeleteTodo",
+        "FieldName": "onDeletePrompt",
         "TypeName": "Subscription",
         "Kind": "PIPELINE",
         "PipelineConfig": {
           "Functions": [
             {
               "Fn::GetAtt": [
-                "QuerygetTodopostAuth0FunctionQuerygetTodopostAuth0FunctionAppSyncFunction6BE14593",
+                "QuerygetPromptpostAuth0FunctionQuerygetPromptpostAuth0FunctionAppSyncFunction36F3D054",
                 "FunctionId"
               ]
             },
             {
               "Fn::GetAtt": [
-                "SubscriptionOnCreateTodoDataResolverFnSubscriptionOnCreateTodoDataResolverFnAppSyncFunction462A70C9",
+                "SubscriptionOnCreatePromptDataResolverFnSubscriptionOnCreatePromptDataResolverFnAppSyncFunction8E5BF980",
                 "FunctionId"
               ]
             }
@@ -1083,7 +1083,7 @@
           "Fn::Join": [
             "",
             [
-              "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onDeleteTodo\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onDeletePrompt\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
               {
                 "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
               },
@@ -1096,11 +1096,11 @@
     }
   },
   "Outputs": {
-    "GetAttTodoTableStreamArn": {
+    "GetAttPromptTableStreamArn": {
       "Description": "Your DynamoDB table StreamArn.",
       "Value": {
         "Fn::GetAtt": [
-          "TodoTable",
+          "PromptTable",
           "StreamArn"
         ]
       },
@@ -1112,16 +1112,16 @@
               {
                 "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
               },
-              "GetAtt:TodoTable:StreamArn"
+              "GetAtt:PromptTable:StreamArn"
             ]
           ]
         }
       }
     },
-    "GetAttTodoTableName": {
+    "GetAttPromptTableName": {
       "Description": "Your DynamoDB table name.",
       "Value": {
-        "Ref": "TodoTable"
+        "Ref": "PromptTable"
       },
       "Export": {
         "Name": {
@@ -1131,17 +1131,17 @@
               {
                 "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
               },
-              "GetAtt:TodoTable:Name"
+              "GetAtt:PromptTable:Name"
             ]
           ]
         }
       }
     },
-    "GetAttTodoDataSourceName": {
+    "GetAttPromptDataSourceName": {
       "Description": "Your model DataSource name.",
       "Value": {
         "Fn::GetAtt": [
-          "TodoDataSource",
+          "PromptDataSource",
           "Name"
         ]
       },
@@ -1153,7 +1153,7 @@
               {
                 "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
               },
-              "GetAtt:TodoDataSource:Name"
+              "GetAtt:PromptDataSource:Name"
             ]
           ]
         }

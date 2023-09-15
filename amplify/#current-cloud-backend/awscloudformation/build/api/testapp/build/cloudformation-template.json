@@ -111,7 +111,7 @@
             "ApiId"
           ]
         },
-        "Expires": 1695167548
+        "Expires": 1695386645
       }
     },
     "GraphQLAPINONEDS95A13CF0": {
@@ -128,7 +128,7 @@
         "Description": "None Data Source for Pipeline functions"
       }
     },
-    "Todo": {
+    "Prompt": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
         "TemplateURL": {
@@ -151,7 +151,7 @@
               {
                 "Ref": "S3DeploymentRootKey"
               },
-              "/stacks/Todo.json"
+              "/stacks/Prompt.json"
             ]
           ]
         },
@@ -241,7 +241,7 @@
       "DependsOn": [
         "GraphQLAPI",
         "GraphQLAPITransformerSchema3CB2AE18",
-        "Todo"
+        "Prompt"
       ]
     }
   },
@@ -312,6 +312,5 @@
         }
       }
     }
-  },
-  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.4.0\",\"stackType\":\"api-AppSync\",\"metadata\":{}}"
+  }
 }

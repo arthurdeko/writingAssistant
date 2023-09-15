@@ -1,7 +1,7 @@
-type Todo {
+type Prompt {
   id: ID!
   name: String!
-  description: String
+  text: String
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
@@ -156,65 +156,65 @@ enum ModelSortDirection {
   DESC
 }
 
-type ModelTodoConnection {
-  items: [Todo]!
+type ModelPromptConnection {
+  items: [Prompt]!
   nextToken: String
 }
 
-input ModelTodoFilterInput {
+input ModelPromptFilterInput {
   id: ModelIDInput
   name: ModelStringInput
-  description: ModelStringInput
-  and: [ModelTodoFilterInput]
-  or: [ModelTodoFilterInput]
-  not: ModelTodoFilterInput
+  text: ModelStringInput
+  and: [ModelPromptFilterInput]
+  or: [ModelPromptFilterInput]
+  not: ModelPromptFilterInput
 }
 
 type Query {
-  getTodo(id: ID!): Todo
-  listTodos(filter: ModelTodoFilterInput, limit: Int, nextToken: String): ModelTodoConnection
+  getPrompt(id: ID!): Prompt
+  listPrompts(filter: ModelPromptFilterInput, limit: Int, nextToken: String): ModelPromptConnection
 }
 
-input ModelTodoConditionInput {
+input ModelPromptConditionInput {
   name: ModelStringInput
-  description: ModelStringInput
-  and: [ModelTodoConditionInput]
-  or: [ModelTodoConditionInput]
-  not: ModelTodoConditionInput
+  text: ModelStringInput
+  and: [ModelPromptConditionInput]
+  or: [ModelPromptConditionInput]
+  not: ModelPromptConditionInput
 }
 
-input CreateTodoInput {
+input CreatePromptInput {
   id: ID
   name: String!
-  description: String
+  text: String
 }
 
-input UpdateTodoInput {
+input UpdatePromptInput {
   id: ID!
   name: String
-  description: String
+  text: String
 }
 
-input DeleteTodoInput {
+input DeletePromptInput {
   id: ID!
 }
 
 type Mutation {
-  createTodo(input: CreateTodoInput!, condition: ModelTodoConditionInput): Todo
-  updateTodo(input: UpdateTodoInput!, condition: ModelTodoConditionInput): Todo
-  deleteTodo(input: DeleteTodoInput!, condition: ModelTodoConditionInput): Todo
+  createPrompt(input: CreatePromptInput!, condition: ModelPromptConditionInput): Prompt
+  updatePrompt(input: UpdatePromptInput!, condition: ModelPromptConditionInput): Prompt
+  deletePrompt(input: DeletePromptInput!, condition: ModelPromptConditionInput): Prompt
 }
 
-input ModelSubscriptionTodoFilterInput {
+input ModelSubscriptionPromptFilterInput {
   id: ModelSubscriptionIDInput
   name: ModelSubscriptionStringInput
-  description: ModelSubscriptionStringInput
-  and: [ModelSubscriptionTodoFilterInput]
-  or: [ModelSubscriptionTodoFilterInput]
+  text: ModelSubscriptionStringInput
+  and: [ModelSubscriptionPromptFilterInput]
+  or: [ModelSubscriptionPromptFilterInput]
 }
 
 type Subscription {
-  onCreateTodo(filter: ModelSubscriptionTodoFilterInput): Todo @aws_subscribe(mutations: ["createTodo"])
-  onUpdateTodo(filter: ModelSubscriptionTodoFilterInput): Todo @aws_subscribe(mutations: ["updateTodo"])
-  onDeleteTodo(filter: ModelSubscriptionTodoFilterInput): Todo @aws_subscribe(mutations: ["deleteTodo"])
+  onCreatePrompt(filter: ModelSubscriptionPromptFilterInput): Prompt @aws_subscribe(mutations: ["createPrompt"])
+  onUpdatePrompt(filter: ModelSubscriptionPromptFilterInput): Prompt @aws_subscribe(mutations: ["updatePrompt"])
+  onDeletePrompt(filter: ModelSubscriptionPromptFilterInput): Prompt @aws_subscribe(mutations: ["deletePrompt"])
 }

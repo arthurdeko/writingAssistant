@@ -1,5 +1,8 @@
 {
   "AppSyncApiName": "testapp",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthModeLastUpdated": "2023-09-15T12:38:57.821Z",
+  "S3DeploymentBucket": "amplify-testapp-dev-171700-deployment",
+  "S3DeploymentRootKey": "/"
 }

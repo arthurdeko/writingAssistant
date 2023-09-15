@@ -42,7 +42,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-testapp-dev-171700-deployment/amplify-cfn-templates/auth/testappc0d35e8f-cloudformation-template.json",
         "logicalId": "authtestappc0d35e8f"
       },
-      "lastPushTimeStamp": "2023-09-12T23:59:27.864Z",
+      "lastPushTimeStamp": "2023-09-15T12:43:54.012Z",
       "output": {
         "UserPoolId": "us-east-1_SRDVOWc5z",
         "AppClientIDWeb": "57s7agdn7jgqvoa5m25jss96qi",
@@ -65,7 +65,9 @@
           "defaultAuthentication": {
             "authenticationType": "API_KEY",
             "apiKeyConfig": {
-              "apiKeyExpirationDays": 7
+              "apiKeyExpirationDays": 7,
+              "apiKeyExpirationDate": "2023-09-22T12:38:55.368Z",
+              "description": ""
             }
           },
           "additionalAuthenticationProviders": []
@@ -78,7 +80,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-testapp-dev-171700-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apitestapp"
       },
-      "lastPushTimeStamp": "2023-09-12T23:59:27.866Z",
+      "lastPushTimeStamp": "2023-09-15T12:44:15.655Z",
       "lastPushDirHash": "LqFj2BV20vpWnp+maE4S0Vn6rW0="
     }
   }
