@@ -5,6 +5,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
+import { API } from 'aws-amplify';
+import { createPrompt } from './graphql/mutations';
+import { listPrompts } from './graphql/queries';
+
 import './App.css'; 
 import { 
     Typography, 
@@ -14,35 +18,46 @@ import {
 export default function Prompts() {
     const [promptName, setPromptName] = useState("");
     const [promptText, setPromptText] = useState("");
-    
+    const [promptList, setPrompts] = useState([]);
+
+    try {
+        API.graphql({
+            query: listPrompts,
+        }).then( res => {
+            console.log(res.data.listPrompts.items);
+            setPrompts(res.data.listPrompts.items);
+            console.log('Got prompts!');
+        });
+
+    } catch (err) {
+        console.log({ err });
+    }
+
     function addPrompt() {
-        promptList.push(
-            {
-                name: promptName, 
-                text: promptText,
-            }
-        )
+        const prompt = {
+            name: promptName, 
+            text: promptText,
+        }
+        try {
+            API.graphql({
+                query: createPrompt,
+                variables: {
+                    input: prompt
+                }
+            }).then( res => {
+                console.log(res);
+                console.log('New prompt created!');
+            });
+
+        } catch (err) {
+            console.log({ err });
+        }
+
+        promptList.push( prompt );
         setPrompts(promptList);
         setPromptName(promptName);
         console.log(promptList);
     }
-
-    const prompts = [
-        {
-            "name": "Blog",
-            "text": "Write me a blog post"
-        },
-        {
-            "name": "VC pitch",
-            "text": "Write me a VC pitch"
-        },
-        {
-            "name": "Press Release",
-            "text": "Write me a Press Release"
-        },
-    ]
-
-    const [promptList, setPrompts] = useState(prompts);
 
     return (
         <>
