@@ -1,80 +1,64 @@
-import { useState } from "react";
+import { useState, useEffect, React } from "react";
 import './App.css';
 import MainBar from './MainBar';
 import {
-  NativeSelect,
+  TextField,
 } from '@mui/material';
-
 import '@aws-amplify/ui-react/styles.css';
+import { API } from 'aws-amplify';
+import { listPrompts } from './graphql/queries';
+import MultipleSelect from "./MultipleSelect";
 
 function App() {
-  const prompts = {
-    "Blog": "This is a blog.",
-    "Press Release": "This is a press release.",
-    "VC Pitch": "This is a VC Pitch."
-  }
+  const [promptList, setPrompts] = useState([]);
+  useEffect(() => {
+    async function getPrompts() {
+      const prompts = await API.graphql({
+          query: listPrompts,
+      });
+      console.log(prompts.data.listPrompts.items);
+      setPrompts(prompts.data.listPrompts.items);
+    }
+    getPrompts();
+  }, []);
 
   const [questionInput, setquestionInput] = useState("");
   const [iterations, setIterations] = useState([]);
-  const [outputType, setOutputType] = useState("blog");
   const [result, setResult] = useState();
-
-  async function onSubmit(event) {
-    event.preventDefault();
-    iterations.push(questionInput);
-    try {
-      
-      const response = await fetch("/api/generate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ question: outputType + questionInput }),
-      });
-
-      const data = await response.json();
-      if (response.status !== 200) {
-        throw data.error || new Error(`Request failed with status ${response.status}`);
-      }
-      
-      setResult(data.result);
-      setquestionInput("");
-    } catch(error) {
-      // Consider implementing your own error handling logic here
-      console.error(error);
-      console.log(event);
-      alert(error.message);
-    }
-  }
 
   return (
     <>
-    <div>
-      <main className="main">
-        <MainBar />
+      <MainBar />
+      <main>
         <ul>
         {iterations.map(iteration => (
           <li>{iteration}</li>
         ))}
         </ul>
-        <form onSubmit={onSubmit}>
-          <NativeSelect name="outputType" value="Blog" onChange={(e) => setOutputType(prompts[e.target.value]) }>
-            <option value="Blog">Blog</option>
-            <option value="Press Release">Press Release</option>
-            <option value="VC Pitch">VC Pitch</option>
-          </NativeSelect>
-          <input
+          <MultipleSelect 
+            label="Prompts" 
+            items={promptList}
+            setResult={setResult}
+            question={questionInput}>
+          </MultipleSelect>
+          <TextField multiline
             type="text"
             name="question"
+            fullWidth
             placeholder="What do you want to write about?"
             value={questionInput}
             onChange={(e) => setquestionInput(e.target.value)}
+            rows={4}
           />
-          <input type="submit" value="Create!" />
-        </form>
-        <textarea name="currentVersion" value={result}></textarea>
+        <TextField
+          className="completion"
+          multiline 
+          fullWidth
+          name="currentVersion" 
+          value={result}
+          rows={10}
+        />
       </main>
-    </div>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MainBar from './MainBar';
 import Grid from '@mui/material/Grid';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -20,18 +20,20 @@ export default function Prompts() {
     const [promptText, setPromptText] = useState("");
     const [promptList, setPrompts] = useState([]);
 
-    try {
-        API.graphql({
-            query: listPrompts,
-        }).then( res => {
-            console.log(res.data.listPrompts.items);
-            setPrompts(res.data.listPrompts.items);
-            console.log('Got prompts!');
-        });
-
-    } catch (err) {
-        console.log({ err });
-    }
+    useEffect(() => {
+        try {
+            API.graphql({
+                query: listPrompts,
+            }).then( res => {
+                console.log(res.data.listPrompts.items);
+                setPrompts(res.data.listPrompts.items);
+                console.log('Got prompts!');
+            });
+    
+        } catch (err) {
+            console.log({ err });
+        }    
+    }, []);
 
     function addPrompt() {
         const prompt = {
@@ -62,7 +64,6 @@ export default function Prompts() {
     return (
         <>
         <MainBar />
-        <main>
             {promptList.map(prompt => {
                 return(<Accordion>
                 <AccordionSummary
@@ -111,7 +112,6 @@ export default function Prompts() {
                 </form>
             </Grid>
         </Grid>
-        </main>
         </>
     )
 }

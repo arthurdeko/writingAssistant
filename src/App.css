@@ -137,3 +137,7 @@
 .promptName {
   width: 300px;
 }
+
+.completion {
+  width: 600px;
+}

@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import ErrorPage from "./ErrorPage";
 import Prompts from "./Prompts";
+import { Navigate } from "react-router-dom";
 
 import {
   createBrowserRouter,
@@ -21,6 +22,11 @@ const router = createBrowserRouter([
     path: "/prompts",
     element: <Prompts />,
     errorElemeny: <ErrorPage />
+  },
+  {
+    path: "/api/generate",
+    element: <Navigate to="/api/generate" replace />
+
   }
 ]);
 
