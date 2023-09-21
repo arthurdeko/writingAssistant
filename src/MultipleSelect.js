@@ -30,8 +30,7 @@ function getStyles(name, items, theme) {
 export default function MultipleSelect(props) {
   const theme = useTheme();
   const [selectedItems, setItems] = React.useState([]);
-  const [questionInput, setQuestionInput] = React.useState();
-
+  
   const handleChange = (event) => {
     const {
       target: { value },
@@ -42,10 +41,13 @@ export default function MultipleSelect(props) {
   };
 
   function composePrompt(items, question) {
-    let composedPrompt = question;
+    let composedPrompt = {
+      prompt: "",
+      question: question,
+    };
     for (const prompt in selectedItems) {
       if (items.find( i => {return i.name === prompt})) {
-        composedPrompt += prompt
+        composedPrompt.prompt += prompt
       }
     }
     return composedPrompt;
@@ -57,7 +59,7 @@ export default function MultipleSelect(props) {
     event.preventDefault();
     console.log(`questionInput: ${input}`);
     console.log(props);
-    axios.post('https://undndgmlrl.execute-api.us-east-1.amazonaws.com/dev/generate', input)
+    axios.post('https://undndgmlrl.execute-api.us-east-1.amazonaws.com/dev/generate', JSON.stringify(input))
     .then(data => {
       props.setResult(data.data.choices[0].message.content);
     })
