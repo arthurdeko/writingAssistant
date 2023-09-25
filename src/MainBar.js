@@ -22,7 +22,7 @@ function MainBar() {
             <BasicMenu signOut={signOut} />
             <div className="spacer"></div>
             <Typography variant="h6" color="inherit" component="div">
-            Word Chef
+            TextTune
             </Typography>
         </Toolbar>
         </AppBar>
