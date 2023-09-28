@@ -5,9 +5,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import { API } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
 import { createPrompt } from './graphql/mutations';
 import { listPrompts } from './graphql/queries';
+import {
+    TextField,
+  } from '@mui/material';
 
 import './App.css'; 
 import { 
@@ -15,16 +18,16 @@ import {
     Button,
 } from '@mui/material';
 
-export default function Prompts() {
+export default function Prompts(props) {
     const [promptName, setPromptName] = useState("");
     const [promptText, setPromptText] = useState("");
     const [promptList, setPrompts] = useState([]);
 
     useEffect(() => {
         try {
-            API.graphql({
-                query: listPrompts,
-            }).then( res => {
+            API.graphql(graphqlOperation(listPrompts,{
+                filter: {owner: {eq: props.user.username}}
+            })).then( res => {
                 console.log(res.data.listPrompts.items);
                 setPrompts(res.data.listPrompts.items);
                 console.log('Got prompts!');
@@ -39,6 +42,7 @@ export default function Prompts() {
         const prompt = {
             name: promptName, 
             text: promptText,
+            owner: props.user.username
         }
         try {
             API.graphql({
@@ -63,9 +67,10 @@ export default function Prompts() {
 
     return (
         <>
-        <MainBar />
+            <Grid item xs={4}>
             {promptList.map(prompt => {
-                return(<Accordion>
+                return(
+                <Accordion key={prompt.name}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                 >
@@ -79,7 +84,7 @@ export default function Prompts() {
               </Accordion>
             )
             })}
-        <Grid container spacing={2}>
+            </Grid>
             <Grid item xs={12}>
                 <form>
                 <Grid container xs={12}>
@@ -94,7 +99,8 @@ export default function Prompts() {
                     />
                     </Grid>
                     <Grid item xs={8}>
-                    <input
+                    <TextField
+                        multiline
                         className="promptText"
                         type="text"
                         name="promptText"
@@ -111,7 +117,6 @@ export default function Prompts() {
                 </Grid>
                 </form>
             </Grid>
-        </Grid>
         </>
     )
 }

@@ -31,52 +31,40 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync",
-      "lastPushTimeStamp": "2023-09-15T17:43:36.171Z",
+      "lastPushTimeStamp": "2023-09-27T18:57:47.989Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-myapp-dev-92324-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apimyapp"
       },
-      "lastPushDirHash": "uVVJU+toBGyTuaCENB3XNewVR5E="
-    }
-  },
-  "hosting": {
-    "amplifyhosting": {
-      "lastPushTimeStamp": "2023-09-15T13:28:24.833Z",
-      "service": "amplifyhosting",
-      "type": "cicd"
+      "lastPushDirHash": "a69/W1eQOOalh54ohxoX/jiiKeg="
     }
   },
   "auth": {
     "myapp7f07a678": {
-      "service": "Cognito",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [],
       "customAuth": false,
+      "dependsOn": [],
       "frontendAuthConfig": {
-        "socialProviders": [],
-        "usernameAttributes": [
-          "EMAIL"
-        ],
-        "signupAttributes": [
-          "EMAIL"
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
         ],
         "passwordProtectionSettings": {
           "passwordPolicyMinLength": 8,
           "passwordPolicyCharacters": []
         },
-        "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
         ],
         "verificationMechanisms": [
           "EMAIL"
         ]
       },
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-myapp-dev-92324-deployment/amplify-cfn-templates/auth/myapp7f07a678-cloudformation-template.json",
-        "logicalId": "authmyapp7f07a678"
-      },
-      "lastPushTimeStamp": "2023-09-15T17:43:36.656Z",
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito",
       "output": {
         "UserPoolId": "us-east-1_IPOqpBNI6",
         "AppClientIDWeb": "66kqcqh6tkfqg964bgnkeh1fo5",
@@ -86,7 +74,19 @@
         "IdentityPoolName": "myapp7f07a678_identitypool_7f07a678__dev",
         "UserPoolName": "myapp7f07a678_userpool_7f07a678"
       },
+      "lastPushTimeStamp": "2023-09-27T18:57:47.991Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-myapp-dev-92324-deployment/amplify-cfn-templates/auth/myapp7f07a678-cloudformation-template.json",
+        "logicalId": "authmyapp7f07a678"
+      },
       "lastPushDirHash": "NU87FCE4LmUY++eh6xmkqLJxt3w="
+    }
+  },
+  "hosting": {
+    "amplifyhosting": {
+      "lastPushTimeStamp": "2023-09-15T13:28:24.833Z",
+      "service": "amplifyhosting",
+      "type": "cicd"
     }
   }
 }

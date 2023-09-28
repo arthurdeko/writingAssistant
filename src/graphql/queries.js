@@ -7,6 +7,7 @@ export const getPrompt = /* GraphQL */ `
       id
       name
       text
+      owner
       createdAt
       updatedAt
       __typename
@@ -24,6 +25,7 @@ export const listPrompts = /* GraphQL */ `
         id
         name
         text
+        owner
         createdAt
         updatedAt
         __typename

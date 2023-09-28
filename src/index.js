@@ -1,37 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import Home from './Home';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import ErrorPage from "./ErrorPage";
 import Prompts from "./Prompts";
-import { Navigate } from "react-router-dom";
-
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-    errorElement: <ErrorPage />
-  },
-  {
-    path: "/prompts",
-    element: <Prompts />,
-    errorElemeny: <ErrorPage />
-  },
-  {
-    path: "/api/generate",
-    element: <Navigate to="/api/generate" replace />
-
-  }
-]);
-
+import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <React.StrictMode>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -40,8 +18,9 @@ root.render(
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap"
     />
-
-    <RouterProvider router={router} />
+    <BrowserRouter>
+    <App />
+    </BrowserRouter>
   </React.StrictMode>
 );
 

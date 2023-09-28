@@ -6,4 +6,5 @@ type Prompt @model {
   id: ID!
   name: String!
   text: String
+  owner: String!
 }

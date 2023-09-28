@@ -1,66 +1,35 @@
-import { useState, useEffect, React } from "react";
-import './App.css';
-import MainBar from './MainBar';
+import awsconfig from './aws-exports';
+import { Amplify } from 'aws-amplify';
+import { withAuthenticator, Authenticator } from '@aws-amplify/ui-react';
+import Grid from '@mui/material/Grid';
+import Home from './Home';
+import Prompts from './Prompts';
 import {
-  TextField,
-} from '@mui/material';
-import '@aws-amplify/ui-react/styles.css';
-import { API } from 'aws-amplify';
-import { listPrompts } from './graphql/queries';
-import MultipleSelect from "./MultipleSelect";
+    Route,
+    Routes,
+} from 'react-router-dom';
+import MainBar from './MainBar';
+
+Amplify.configure(awsconfig);
 
 function App() {
-  const [promptList, setPrompts] = useState([]);
-  useEffect(() => {
-    async function getPrompts() {
-      const prompts = await API.graphql({
-          query: listPrompts,
-      });
-      console.log(prompts.data.listPrompts.items);
-      setPrompts(prompts.data.listPrompts.items);
-    }
-    getPrompts();
-  }, []);
+    return (
+        <>
+        <Authenticator>
+        {({ signOut, user }) => (
+            <Grid container spacing={2} padding={2}>
+            <MainBar signOut={signOut} />
+            <Routes>
+            <Route path="/home" element={<Home user={user} signOut={signOut} />} />
+            <Route path="/prompts" element={<Prompts user={user} signOut={signOut} />} />
+            </Routes>
+            </Grid>
+        )}
 
-  const [questionInput, setquestionInput] = useState("");
-  const [iterations, setIterations] = useState([]);
-  const [result, setResult] = useState();
+        </Authenticator>
 
-  return (
-    <>
-      <MainBar />
-      <main>
-        <ul>
-        {iterations.map(iteration => (
-          <li>{iteration}</li>
-        ))}
-        </ul>
-          <MultipleSelect 
-            label="Prompts" 
-            items={promptList}
-            setResult={setResult}
-            question={questionInput}>
-          </MultipleSelect>
-          <TextField multiline
-            type="text"
-            name="question"
-            fullWidth
-            placeholder="What do you want to write about?"
-            value={questionInput}
-            onChange={(e) => setquestionInput(e.target.value)}
-            rows={4}
-          />
-        <TextField
-          className="completion"
-          multiline 
-          fullWidth
-          name="currentVersion" 
-          value={result}
-          rows={10}
-        />
-      </main>
-    </>
-  );
+        </>
+    );
 }
 
-export default App;
+export default withAuthenticator(App);

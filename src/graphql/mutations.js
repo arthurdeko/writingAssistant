@@ -10,6 +10,7 @@ export const createPrompt = /* GraphQL */ `
       id
       name
       text
+      owner
       createdAt
       updatedAt
       __typename
@@ -25,6 +26,7 @@ export const updatePrompt = /* GraphQL */ `
       id
       name
       text
+      owner
       createdAt
       updatedAt
       __typename
@@ -40,6 +42,7 @@ export const deletePrompt = /* GraphQL */ `
       id
       name
       text
+      owner
       createdAt
       updatedAt
       __typename
