@@ -82,20 +82,14 @@ export default function Prompts(props) {
                     input: prompt
                 }
             }).then( res => {
-                console.log(res);
-                console.log('New prompt created!');
                 setPromptName("");
                 setPromptText("");
+                loadPrompts();
             });
 
         } catch (err) {
             console.log({ err });
         }
-
-        promptList.push( prompt );
-        setPrompts(promptList);
-        
-        console.log(promptList);
     }
 
     function deletePrompt(event) {
@@ -106,25 +100,25 @@ export default function Prompts(props) {
         } else if (event.target.parentElement.value) {
             promptId = event.target.parentElement.value;
         }
-        console.log(promptName);
-        try{
-            API.graphql({
-                query: mutations.deletePrompt,
-                variables: {
-                    input: {
-                        id: promptId,
-                    }
-                }
-            }).then( res => {
-                console.log(res);
-                console.log('Prompt deleted!');
-                loadPrompts();
-
-            });
-    
-        } catch(error) {
-            console.error({ error });
+        if (!promptId) {
+            console.log(event);
+            alert('No ID provided!');
+            return;
         }
+        console.log(promptId);
+        API.graphql({
+            query: mutations.deletePrompt,
+            variables: {
+                input: {
+                    id: promptId,
+                }
+            }
+        }).then( res => {
+            loadPrompts();
+        }).catch( res => {
+            alert(JSON.stringify(res.errors[0].message));
+        });
+    
     }
 
     function displayEdit(event) {
@@ -270,7 +264,7 @@ export default function Prompts(props) {
                         onChange={(e) => setPromptName(e.target.value)}
                     />
                     </Grid>
-                    <Grid item xs={8}>
+                    <Grid item xs={10}>
                     <TextField
                         multiline
                         className="promptText"
@@ -281,12 +275,10 @@ export default function Prompts(props) {
                         onChange={(e) => setPromptText(e.target.value)}
                     />
                     </Grid>
-                    <Grid container>
-                        <Grid item xs={2}>
-                        <Button onClick={addPrompt} variant="contained">
-                            <Typography>Add</Typography>
-                        </Button>
-                        </Grid>
+                    <Grid item xs={2}>
+                    <Button onClick={addPrompt} variant="contained">
+                        <Typography>Add</Typography>
+                    </Button>
                     </Grid>
                 </Grid>
                 </form>
