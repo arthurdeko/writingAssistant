@@ -141,3 +141,8 @@
 .completion {
   width: 600px;
 }
+
+.editButton {
+  position: relative;
+  float: right;
+}
