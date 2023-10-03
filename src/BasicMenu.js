@@ -35,8 +35,9 @@ export default function BasicMenu(props) {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}><Link color="black" underline="none" href="/home">Home</Link></MenuItem>
+        <MenuItem onClick={handleClose}><Link color="black" underline="none" href="/home">Compose</Link></MenuItem>
         <MenuItem onClick={handleClose}><Link color="black" underline="none" href="/prompts">Prompts</Link></MenuItem>
+        <MenuItem onClick={handleClose}><Link color="black" underline="none" href="/about">About</Link></MenuItem>
         <MenuItem onClick={props.signOut}>Logout</MenuItem>
       </Menu>
     </div>

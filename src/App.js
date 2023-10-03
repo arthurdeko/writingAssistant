@@ -4,6 +4,7 @@ import { withAuthenticator, Authenticator } from '@aws-amplify/ui-react';
 import Grid from '@mui/material/Grid';
 import Home from './Home';
 import Prompts from './Prompts';
+import About from './About';
 import {
     Route,
     Routes,
@@ -22,6 +23,7 @@ function App() {
             <Routes>
             <Route path="/home" element={<Home user={user} signOut={signOut} />} />
             <Route path="/prompts" element={<Prompts user={user} signOut={signOut} />} />
+            <Route path="/about" element={<About />} />
             </Routes>
             </Grid>
         )}
